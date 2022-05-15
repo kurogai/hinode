@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "SosuMangaReader",
+    "slug": "SosuMangaReader",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
