@@ -1,2 +1,3 @@
-Hinode - Amanhecer do Sol
-Novo nome para o app
+HinodeMangaReader - Android app to download and read manga, inspired by tachiyomi
+
+More to add
