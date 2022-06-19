@@ -3,8 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 export default function MangaSearchResult(props){
     return (
         <View style={{width:"100%", marginTop : "5%"}}>
-            <TouchableOpacity>
-                <View style={{
+            <View style={{
                     backgroundColor : "white",
                     flexDirection : "row"
                 }}>
@@ -35,8 +34,7 @@ export default function MangaSearchResult(props){
                         }} source={require("../resources/icons/icons8-eye-100.png")}/>
                     </View>
                     */}
-                </View>
-            </TouchableOpacity>
+            </View>
         </View>
     );
 }

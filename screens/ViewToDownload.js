@@ -39,7 +39,7 @@ export const ViewToDownload = (props)=>{
                 width : "100%",
                 padding : "2%"
             }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=> props.navigation.navigate("Home")}>
                     <View style={{
                         width : 35,
                         height : 35,

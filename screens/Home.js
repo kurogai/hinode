@@ -64,19 +64,24 @@ export const Home = (props)=>{
                     <ScrollView style={{
                         height : "57%"
                     }}>
-                        <MangaSearchResult/>
-                        <MangaSearchResult/>
-                        <MangaSearchResult/>
-                        <MangaSearchResult/>
-                        <MangaSearchResult/>
-                        <MangaSearchResult/>
-                        <MangaSearchResult/>
-                        <MangaSearchResult/>
-                        <MangaSearchResult/>
+                        <TouchableOpacity onPress={()=>{
+                            props.navigator.navigate("ViewToDownload")
+                        }}>
+                            <MangaSearchResult/>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{
+                            props.navigator.navigate("ViewToDownload")
+                        }}>
+                            <MangaSearchResult/>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{
+                            props.navigator.navigate("ViewToDownload")
+                        }}>
+                            <MangaSearchResult/>
+                        </TouchableOpacity>
                     </ScrollView>
                 </View>
             </View>
-            <BottonNav/>
         </View>
     );
 }

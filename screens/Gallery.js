@@ -23,9 +23,9 @@ export const Gallery = (props)=>{
                         padding : "2%",
                         borderRadius:25
                     }}>
-                        {alphabet.map((letter)=>{
+                        {alphabet.map((letter,index)=>{
                             return (
-                                <TouchableOpacity>
+                                <TouchableOpacity key={index}>
                                     <View style={{
                                         width : 28,
                                         height : 28,

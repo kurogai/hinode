@@ -7,6 +7,8 @@ export default function BottonNav(props){
                 <TouchableOpacity style={{
                     width : "100%",
                     height : "100%"
+                }} onPress={()=>{
+                    props.swiper.scrollTo(0)
                 }}>
                     <Image style={{
                         width : "100%",
@@ -18,6 +20,8 @@ export default function BottonNav(props){
                 <TouchableOpacity style={{
                     width : "100%",
                     height : "100%"
+                }} onPress={()=>{
+                    props.swiper.scrollTo(1)
                 }}>
                     <Image style={{
                         width : "100%",
@@ -44,6 +48,8 @@ export default function BottonNav(props){
                 <TouchableOpacity style={{
                     width : "100%",
                     height : "100%"
+                }} onPress={()=>{
+                    props.swiper.scrollTo(2)
                 }}>
                     <Image style={{
                         width : "100%",
@@ -56,6 +62,8 @@ export default function BottonNav(props){
                 <TouchableOpacity style={{
                     width : "100%",
                     height : "100%"
+                }} onPress={()=>{
+                    props.swiper.scrollTo(3)
                 }}>
                     <Image style={{
                         width : "100%",
@@ -67,6 +75,8 @@ export default function BottonNav(props){
                 <TouchableOpacity style={{
                     width : "100%",
                     height : "100%"
+                }} onPress={()=>{
+                    props.swiper.scrollTo(4)
                 }}>
                     <Image style={{
                         width : "100%",
