@@ -2,28 +2,23 @@ import { View, ScrollView, Text, TouchableOpacity } from "react-native";
 import BottonNav from "../components/BottonNav";
 import { ItemLaunchManga } from "../components/Downloads/ItemLaunchManga";
 
-let size = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+let size = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
-export const ViewToDownload = (props)=>{
+export const MangaImages = (props)=>{
     function Chapter(params){
         return (
             <TouchableOpacity style={{
-                width : "100%",
-                height : "auto",
-                justifyContent : "space-between",
+                width : 89,
+                height : 89,
+                justifyContent : "center",
                 alignItems : "center",
                 backgroundColor : "#FEC89A",
+                margin : "1%",
                 borderColor : "black",
-                borderWidth : 0.2,
-                flexDirection : "row",
-                padding : "5%",
-                margin : "1%"
+                borderWidth : 0.2
             }}>
                 <View>
-                    <Text>Chapter {params.number}</Text>
-                </View>
-                <View>
-                    <Text>Download</Text>
+                    <Text>{params.number}</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -31,9 +26,8 @@ export const ViewToDownload = (props)=>{
     return (
         <View style={{height:"100%", backgroundColor : "#F8EDEB"}}>
             <View style={{
-                position : "absolute",
                 marginTop : "15%",
-                zIndex : 1,
+                marginBottom : "5%",
                 flexDirection : "row",
                 justifyContent : "space-between",
                 width : "100%",
@@ -48,14 +42,6 @@ export const ViewToDownload = (props)=>{
                     }}></View>
                 </TouchableOpacity>
             </View>
-            <View style={{
-                width : "100%",
-                height : "30%",
-                backgroundColor : "red",
-                marginTop : "10%",
-                marginBottom : "2%"
-            }}>
-            </View>
             <View>
                 <View style={{
                     justifyContent : "center",
@@ -65,7 +51,11 @@ export const ViewToDownload = (props)=>{
                         width:"95%",
                         height : "90%"
                     }}>
-                        <View>
+                        <View style={{
+                            flexDirection : "row",
+                            flexWrap : "wrap",
+                            justifyContent : "flex-start"
+                        }}>
                             {size.map((number, index)=>{
                                 return <View key={index}><Chapter number={index + 1}/></View>
                             })}
