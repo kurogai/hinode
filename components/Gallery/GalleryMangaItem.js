@@ -1,6 +1,6 @@
 import { View, Text, Image } from "react-native";
 
-export const GalleryMangaItem = ()=>{
+export const GalleryMangaItem = (props)=>{
     return(
         <>
             <View style={{
@@ -15,7 +15,7 @@ export const GalleryMangaItem = ()=>{
                     flexDirection : "row",
                     justifyContent : "space-between",
                 }}>
-                    <Text>Naruto Shippuden</Text>
+                    <Text>{props.name}</Text>
                     <Image source={require("../../resources/icons/icons8-downloads-folder-100.png")} style={{
                         width : 20,
                         height : 20

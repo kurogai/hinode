@@ -10,7 +10,7 @@ import { ViewImage } from './screens/ViewImage';
 
 const Stack = createStackNavigator();
 
-export default function App() {
+export default function App(props) {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home' screenOptions={{

@@ -1,35 +1,42 @@
-import { View, ScrollView, Text } from "react-native";
+import { useState } from "react";
+import { View, ScrollView, Text, TouchableWithoutFeedback } from "react-native";
+import { TouchableHighlight } from "react-native-gesture-handler";
 import BottonNav from "../components/BottonNav";
 
 export const Definitions = (props)=>{
     function Option(param){
-        const option = param.option;
+        const [turn, _setTurn] = useState(false);
 
         return(
-            <View style={{
-                flexDirection : "row",
-                justifyContent : "space-between",
-                alignItems : "center",
-                margin : "1%"
+            <TouchableWithoutFeedback onPress={()=>{
+                if(turn === false) _setTurn(true)
+                else _setTurn(false)
             }}>
-                <View>
-                    <Text>{param.notification}</Text>
-                </View>
-                <View>
+                <View style={{
+                    flexDirection : "row",
+                    justifyContent : "space-between",
+                    alignItems : "center",
+                    margin : "1%"
+                }}>
+                    <View>
+                        <Text>{param.notification}</Text>
+                    </View>
+                    <View>
                     <View style={{width:60, height:30, backgroundColor:"whitesmoke",
-                transform:[
-                    {
-                        scaleX : (option === true) ? -1 : 1
-                    }
-                ]}}>
-                        <View style={{
+                    transform:[
+                        {
+                            scaleX : (turn === true) ? -1 : 1
+                        }
+                    ]}}>
+                    <View style={{
                             width:"50%",
                             height:"100%",
-                            backgroundColor: (option === true) ? "green" : "red"
+                            backgroundColor: (turn === true) ? "green" : "red"
                         }}></View>
                     </View>
                 </View>
             </View>
+            </TouchableWithoutFeedback>
         );
     }
 
@@ -57,9 +64,9 @@ export const Definitions = (props)=>{
                                     fontSize : 22
                                 }}>Definições Gerais</Text>
                             </View>
-                            <Option notification="Notificações" option={true}/>
-                            <Option notification="Atualizações Automáticas" option={false}/>
-                            <Option notification="Modo Lite" option={true}/>
+                            <Option notification="Notificações"/>
+                            <Option notification="Atualizações Automáticas"/>
+                            <Option notification="Modo Lite"/>
                         </View>
                     </ScrollView>
                 </View>

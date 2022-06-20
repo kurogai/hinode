@@ -5,6 +5,8 @@ import { ItemLaunchManga } from "../components/Downloads/ItemLaunchManga";
 let size = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 export const MangaImages = (props)=>{
+    const navigation = props.route.params.navigator;
+
     function Chapter(params){
         return (
             <TouchableOpacity style={{
@@ -16,7 +18,9 @@ export const MangaImages = (props)=>{
                 margin : "1%",
                 borderColor : "black",
                 borderWidth : 0.2
-            }}>
+            }} onPress={()=> navigation.navigate("ViewImage",{
+                navigator : navigation
+            })}>
                 <View>
                     <Text>{params.number}</Text>
                 </View>
@@ -33,7 +37,7 @@ export const MangaImages = (props)=>{
                 width : "100%",
                 padding : "2%"
             }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.goBack()}>
                     <View style={{
                         width : 35,
                         height : 35,

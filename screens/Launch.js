@@ -1,4 +1,4 @@
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, TouchableOpacity } from "react-native";
 import BottonNav from "../components/BottonNav";
 import { ItemLaunchManga } from "../components/Downloads/ItemLaunchManga";
 
@@ -15,11 +15,18 @@ export const Launch = (props)=>{
                         width:"95%",
                         height : "90%"
                     }}>
-                        <ItemLaunchManga/>
-                        <ItemLaunchManga/>
-                        <ItemLaunchManga/>
-                        <ItemLaunchManga/>
-                        <ItemLaunchManga/>
+                        <TouchableOpacity onPress={()=> props.navigator.navigate("ViewToDownload")}>
+                            <ItemLaunchManga/>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=> props.navigator.navigate("ViewToDownload")}>
+                            <ItemLaunchManga/>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=> props.navigator.navigate("ViewToDownload")}>
+                            <ItemLaunchManga/>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=> props.navigator.navigate("ViewToDownload")}>
+                            <ItemLaunchManga/>
+                        </TouchableOpacity>
                     </ScrollView>
                 </View>
             </View>

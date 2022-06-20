@@ -1,6 +1,6 @@
 import { View, Text, Image } from "react-native";
 
-export const ItemDownload = ()=>{
+export const ItemDownload = (props)=>{
     return(
         <>
                 <View style={{
@@ -17,15 +17,28 @@ export const ItemDownload = ()=>{
                         }}>
                             <Text style={{
                                 fontWeight : "bold",
-                                fontSize : 18
-                            }}>Manga Title</Text>
+                                fontSize : 14
+                            }}>{props.title}</Text>
                             <View style={{
                                 flexDirection:"row"
                             }}>
-                                <Image source={require("../../resources/icons/icons8-eye-100.png")} style={{ 
-                                    width : 20, height : 20, margin :2}}/>
-                                <Image source={require("../../resources/icons/icons8-close-100.png")} style={{ 
-                                    width : 20, height : 20, margin :2}}/>
+                                {(()=>{
+                                    if(props.status === false) return (
+                                        <>
+                                            <Image source={require("../../resources/icons/icons8-eye-100.png")} style={{ 
+                                                width : 20, height : 20, margin :2}}/>
+                                            <Image source={require("../../resources/icons/icons8-close-100.png")} style={{ 
+                                                width : 20, height : 20, margin :2}}/>
+                                        </>
+                                    ); else return(
+                                        <>
+                                            <Text style={{
+                                                fontWeight : "bold",
+                                                fontSize : 12
+                                            }}>Acabado (clique aqui)</Text>
+                                        </>
+                                    );
+                                })()}
                             </View>
                         </View>
                         <View style={{
