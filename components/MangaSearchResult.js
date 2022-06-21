@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image} from "react-native";
  
 export default function MangaSearchResult(props){
     return (
@@ -8,32 +8,18 @@ export default function MangaSearchResult(props){
                     flexDirection : "row"
                 }}>
                     <View style={{width:"20%", maxHeight : 100}}>
-                        <View style={{
+                        <Image style={{
                             width : "100%",
-                            height : "100%",
-                            backgroundColor : "weat"
-                        }}/>
+                            height : "100%"
+                        }} resizeMethod={"scale"} resizeMode={"cover"} source={{uri : props.img}}/>
                     </View>
                     <View style={{width:"70%", 
                     justifyContent : "space-between",
                     padding : "1%"
                 }}>
-                        <Text>Manga Title</Text>
-                        <Text>Manga Description askshaidhidsadiniusadnsaidbsadibsdai </Text>
+                        <Text>{props.title}</Text>
+                        <Text>{props.autor}</Text>
                     </View>
-                    {/*
-                    //? Talvez nao seja necessario meter o icone da imagem?
-                    <View style={{width:"20%", 
-                    justifyContent : "flex-end",
-                    alignItems : "center",
-                    padding : "3%"
-                }}>
-                        <Image style={{
-                            width : "100%",
-                            height : "20%"
-                        }} source={require("../resources/icons/icons8-eye-100.png")}/>
-                    </View>
-                    */}
             </View>
         </View>
     );

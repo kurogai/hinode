@@ -1,8 +1,21 @@
+import { useState } from "react";
 import { View, Text, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
-import BottonNav from "../components/BottonNav";
 import MangaSearchResult from "../components/MangaSearchResult";
+import ModalDropdown from 'react-native-modal-dropdown';
+
+import { SourceList } from "../controllers/classes/Sources";
 
 export const Home = (props)=>{
+    const [online, setOnline] = useState(false);
+    const [source, setSource] = useState();
+    const [searchList, setSearchList] = useState([]);
+    const [mangaName, setMangaName] = useState();
+
+    async function search(name){
+        let list = await SourceList[source].search(name);
+        setSearchList(list);
+    }
+
     return (
         <View style={{height:"100%", backgroundColor : "#F8EDEB"}}>
             <View>
@@ -11,7 +24,10 @@ export const Home = (props)=>{
                     top : "5%",
                     left : "5%"
                 }}>
-                    <Text style={{ fontWeight : "bold" }}>Online</Text>
+                    <Text style={{ fontWeight : "bold" }}>{(()=>{
+                        if(online == true) return "Online";
+                        else return "Offline" 
+                    })()}</Text>
                 </View>
                 <View style={{
                     justifyContent : "flex-start",
@@ -37,7 +53,9 @@ export const Home = (props)=>{
                          margin : "1%",
                          borderRadius : 25
                      }}>
-                         <Text>MangaTube</Text>
+                         <ModalDropdown defaultValue={"MangaTube"} options={['MangaTube', 'Crunchyroll']} dropdownStyle={{
+                             backgroundColor : "black"
+                         }} onSelect={(select)=> setSource(select)}/>
                      </View>
 
                      <View style={{
@@ -55,30 +73,35 @@ export const Home = (props)=>{
                                 maxWidth : "85%"
                             }}
                             placeholder="Pesquise centenas de mangas"
+                            onChangeText={(data)=> setMangaName(data)}
                         />
-                         <Image style={{
-                             width : "9%",
-                             height : "100%"
-                         }} source={require("../resources/icons/icons8-google-web-search-100.png")}/>
+                        <TouchableOpacity style={{
+                                width : "9%",
+                                height : "100%"
+                            }} onPress={()=>{
+                                setSearchList([]);
+                                search(mangaName)
+                            }}>
+                                <Image style={{
+                                    width : 25,
+                                    height : 25
+                                }} source={require("../resources/icons/icons8-google-web-search-100.png")}/>
+                        </TouchableOpacity>
                      </View>
                     <ScrollView style={{
                         height : "57%"
                     }}>
-                        <TouchableOpacity onPress={()=>{
-                            props.navigator.navigate("ViewToDownload")
-                        }}>
-                            <MangaSearchResult/>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>{
-                            props.navigator.navigate("ViewToDownload")
-                        }}>
-                            <MangaSearchResult/>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>{
-                            props.navigator.navigate("ViewToDownload")
-                        }}>
-                            <MangaSearchResult/>
-                        </TouchableOpacity>
+                        {searchList.map((item,index)=>{
+                            if(typeof(item.title) !== undefined && typeof(item.img) != String) return (
+                                <View key={index}>
+                                    <TouchableOpacity onPress={()=>{
+                                        props.navigator.navigate("ViewToDownload")
+                                    }}>
+                                        <MangaSearchResult title={item.title} autor={item.autor} img={item.img} link={item.link} source={source} />
+                                    </TouchableOpacity>
+                                </View>
+                            );
+                        })}
                     </ScrollView>
                 </View>
             </View>
