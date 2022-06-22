@@ -7,7 +7,7 @@ import { SourceList } from "../controllers/classes/Sources";
 
 export const Home = (props)=>{
     const [online, setOnline] = useState(false);
-    const [source, setSource] = useState();
+    const [source, setSource] = useState(0);
     const [searchList, setSearchList] = useState([]);
     const [mangaName, setMangaName] = useState();
 
@@ -95,9 +95,16 @@ export const Home = (props)=>{
                             if(typeof(item.title) !== undefined && typeof(item.img) != String) return (
                                 <View key={index}>
                                     <TouchableOpacity onPress={()=>{
-                                        props.navigator.navigate("ViewToDownload")
+                                        props.navigator.navigate("ViewToDownload",{
+                                            title : item.title,
+                                            autor : item.autor,
+                                            img : item.img,
+                                            url : item.url,
+                                            source : source,
+                                            address : item.address
+                                        })
                                     }}>
-                                        <MangaSearchResult title={item.title} autor={item.autor} img={item.img} link={item.link} source={source} />
+                                        <MangaSearchResult title={item.title} autor={item.autor} img={item.img} url={item.url} source={source} address={item.address} />
                                     </TouchableOpacity>
                                 </View>
                             );

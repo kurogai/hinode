@@ -26,7 +26,6 @@ export class MangaTube extends Manga{
 
     async search(name){
         let searchList = Array();
-
         let client = await axios.default.get(encodeURI(this.site + `wp-json/site/search/?keyword=${name}&type=undefined&nonce=5e74532793`),{
             headers : {
                 "Accept" : "application/json"
@@ -38,9 +37,42 @@ export class MangaTube extends Manga{
                 "title" : data[x].title,
                 "img" : data[x].img,
                 "url" : data[x].url,
-                "autor" : data[x].autor
+                "autor" : data[x].autor,
+                "address" : x
             });
         }
         return searchList;
     }
+
+    async getChapterList(manga, address, page, callback){
+        let list = [];
+        let client = await axios.default.get(encodeURI(manga + `jsons/series/chapters_list.json?page=${page}&order=asc&id_s=${address}`),{
+            headers : {
+                "Accept" : "application/json"
+            },
+            timeout : 2000
+        });
+        let data = await Object(client.data);
+        for(const x in data){
+            if(x == "chapters"){
+                //console.log(data[x])
+                data[x].map((element)=>{
+                    //list = Object.assign(element,list);
+                    list.push(element)
+                })
+                //list.assign({
+                //    number : data[x].number,
+                //    link : data[x].link
+                //})
+                
+                //callback({
+                //    number : data[x].number,
+                //    link : data[x].link
+                //});
+            }
+        }
+        callback(list);
+    }
 }
+
+// https://mangatube.site/jsons/series/chapters_list.json?page=1&order=desc&id_s=14415

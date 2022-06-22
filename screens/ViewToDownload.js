@@ -1,10 +1,22 @@
-import { View, ScrollView, Text, TouchableOpacity } from "react-native";
-import BottonNav from "../components/BottonNav";
-import { ItemLaunchManga } from "../components/Downloads/ItemLaunchManga";
-
-let size = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+import { useState, useEffect } from "react";
+import { View, ScrollView, Text, TouchableOpacity, Image, FlatList } from "react-native";
+import { SourceList } from "../controllers/classes/Sources";
 
 export const ViewToDownload = (props)=>{
+    const [chapter, setChatper] = useState();
+    const [pageNumber, setPageNumber] = useState(1);
+    let manga = SourceList[props.route.params.source];
+
+    function getPages(number){
+        SourceList[0].getChapterList(props.route.params.url, props.route.params.address, number,(item)=> {
+            setChatper(item);
+        });
+    }
+
+    useEffect(()=>{
+        getPages(1)
+    },[]);
+
     function Chapter(params){
         return (
             <TouchableOpacity style={{
@@ -48,30 +60,53 @@ export const ViewToDownload = (props)=>{
                     }}></View>
                 </TouchableOpacity>
             </View>
-            <View style={{
+            <Image style={{
                 width : "100%",
                 height : "30%",
                 backgroundColor : "red",
                 marginTop : "10%",
                 marginBottom : "2%"
-            }}>
-            </View>
+            }} source={{ uri : props.route.params.img }}/>
             <View>
                 <View style={{
                     justifyContent : "center",
                     alignItems : "center"
                 }}>
-                    <ScrollView style={{
-                        width:"95%",
-                        height : "90%"
-                    }}>
-                        <View>
-                            {size.map((number, index)=>{
-                                return <View key={index}><Chapter number={index + 1}/></View>
-                            })}
-                        </View>
-                    </ScrollView>
+                <TouchableOpacity style={{
+                    width : "100%",
+                    justifyContent : "center",
+                    backgroundColor : "wheat",
+                    alignItems : "center",
+                    padding : "2%"
+                }} onPress={()=>{
+                    getPages(pageNumber);
+                    setPageNumber(pageNumber - 1);
+                }}>
+                    <Text>Recuar</Text>
+                </TouchableOpacity>
+                <ScrollView style={{
+                    height : "70%"
+                }}>
+                    {chapter.map((element,index)=> <View key={index}>
+                        <Chapter number={element.number}/>
+                    </View>)}
+                    <Chapter/>
+                </ScrollView>
+                    
                 </View>
+                <TouchableOpacity style={{
+                    width : "100%",
+                    justifyContent : "center",
+                    backgroundColor : "wheat",
+                    alignItems : "center",
+                    padding : "2%"
+                }} onPress={()=>{
+                    if(pageNumber < 0) setPageNumber(1);
+                    else setPageNumber(pageNumber + 1);
+                    getPages(pageNumber);
+                }}>
+                    <Text>Carregar Mais</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
