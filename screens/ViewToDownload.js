@@ -5,16 +5,21 @@ import { SourceList } from "../controllers/classes/Sources";
 export const ViewToDownload = (props)=>{
     const [chapter, setChatper] = useState();
     const [pageNumber, setPageNumber] = useState(1);
+    const [loading,setLoading] = useState();
     let manga = SourceList[props.route.params.source];
 
     function getPages(number){
-        SourceList[0].getChapterList(props.route.params.url, props.route.params.address, number,(item)=> {
+        SourceList[0].getChapterList(props.route.params.url, props.route.params.address, number,(item,status)=> {
             setChatper(item);
+            setLoading("ready");
         });
     }
 
     useEffect(()=>{
-        getPages(1)
+        setLoading("notReady");
+        setTimeout(()=>{
+            getPages(1)
+        },1000);
     },[]);
 
     function Chapter(params){
@@ -40,6 +45,15 @@ export const ViewToDownload = (props)=>{
             </TouchableOpacity>
         );
     }
+
+    function renderList(){
+        if(typeof(chapter) !== undefined){
+            return (chapter?.map((element,index)=> <View key={index}>
+                <Chapter number={element.number}/>
+            </View>))
+        }
+    }
+
     return (
         <View style={{height:"100%", backgroundColor : "#F8EDEB"}}>
             <View style={{
@@ -87,10 +101,18 @@ export const ViewToDownload = (props)=>{
                 <ScrollView style={{
                     height : "70%"
                 }}>
-                    {chapter.map((element,index)=> <View key={index}>
-                        <Chapter number={element.number}/>
-                    </View>)}
-                    <Chapter/>
+                    {(loading == "notReady") ? <Text>Carregando...</Text> : renderList()}
+                    <View style={{
+                        width : "100%",
+                        height : "auto",
+                        justifyContent : "space-between",
+                        alignItems : "center",
+                        borderColor : "black",
+                        borderWidth : 0.2,
+                        flexDirection : "row",
+                        padding : "5%",
+                        margin : "1%"
+                    }}></View>
                 </ScrollView>
                     
                 </View>

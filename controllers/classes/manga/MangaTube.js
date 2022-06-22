@@ -55,20 +55,9 @@ export class MangaTube extends Manga{
         let data = await Object(client.data);
         for(const x in data){
             if(x == "chapters"){
-                //console.log(data[x])
                 data[x].map((element)=>{
-                    //list = Object.assign(element,list);
                     list.push(element)
                 })
-                //list.assign({
-                //    number : data[x].number,
-                //    link : data[x].link
-                //})
-                
-                //callback({
-                //    number : data[x].number,
-                //    link : data[x].link
-                //});
             }
         }
         callback(list);
