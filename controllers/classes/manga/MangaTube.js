@@ -66,7 +66,7 @@ export class MangaTube extends Manga{
         callback(list);
     }
 
-    download(manga, index, page){
+    download(manga, index, page, callbackDownloaded){
         function nameParser(mangaToParse){
             return mangaToParse.split("/")[4];
         }
@@ -95,41 +95,23 @@ export class MangaTube extends Manga{
         createFolder(name,chapter,exists => {
             if(exists){
                 let downloadLink = `${siteImageSource}${name}/${parseInt(chapter)}/${page}.jpg`;
-                console.log("fuc2k")
                 axios.get(downloadLink).then((testLink)=>{
                     if(testLink.status == 200){
                         FileSystem.downloadAsync(downloadLink,FileSystem.documentDirectory + `Hinode/downloads/${name}/${parseInt(chapter)}/${page}.jpg`).then((result)=>{
-                             //useDispatch(updateDownloadCount({
-                             //    index : index
-                             //}));
                             MediaLibrary.createAssetAsync(FileSystem.documentDirectory + `Hinode/downloads/${name}/${parseInt(chapter)}/${page}.jpg`).then((asset)=>{
                             MediaLibrary.getAlbumAsync("Hinode").then((album)=>{
                                 if(album ===  null){
                                     MediaLibrary.createAlbumAsync(`Hinode/downloads/${name}/${parseInt(chapter)}`,asset,false).then((created)=>{
-                                        if(created){
-                                            console.log("Album created");
-                                        }else{
-                                            console.log("Erro ao criar album");
-                                        }
+                                        if(created) callbackDownloaded(true);
                                     }).catch((err)=> console.log)
                                 }
                             });
                             });
-                        }).catch((err)=> console.log(err))
-                        // FileSystem.downloadAsync(downloadLink,
-                        //     FileSystem.documentDirectory + `Hinode/downloads/${name}/${parseInt(chapter)}/${page}.jpg`
-                        // ).then(data=>{
-                        //     useDispatch(updateDownloadCount({
-                        //         index : index
-                        //     }))
-                        //     console.log("Baixado");
-                        // }).catch((err)=> console.log);
+                        }).catch((err)=> callbackDownloaded(false));
                     }else{
                         console.log("Link não resultou...");
                     }
-               }).catch((err)=> console.log)
-            }else{
-                console.log("fuckkk")
+               }).catch((err)=> callbackDownloaded("404"));
             }
         });
 

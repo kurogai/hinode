@@ -6,6 +6,7 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "orientation" : "portrait",
     "plugins": [
       [
         "expo-media-library",{

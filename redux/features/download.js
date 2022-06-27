@@ -17,9 +17,12 @@ const DownloadChapter = createSlice({
         },
         updateDownloadCount : (state,action)=>{
             const x = action.payload;
-            const target = x.index;
-
-            state[target].downloaded = state[target].downloaded + 1;
+            const manga = x.manga;
+            state.map((element)=>{
+                if(element.manga = manga){
+                    element.downloaded = element.downloaded + 1
+                }
+            })
         }
     }
 });
