@@ -86,43 +86,6 @@ export class MangaTube extends Manga{
                     callback(true);
                 })
             })
-            /*
-            FileSystem.getInfoAsync(FileSystem.documentDirectory + `Hinode/downloads/${mangaName}`).then((exists)=>{
-                if(exists.exists){
-                    console.log(`Existe : Hinode/downloads/${mangaName}`)
-                    FileSystem.getInfoAsync(FileSystem.documentDirectory + `Hinode/downloads/${mangaName}/${parseInt(chapter)}`).then((mangaFolderExists)=>{
-                        if(mangaFolderExists.exists) { 
-                            console.log(`Ja existe a pasta do manga : Hinode/downloads/${mangaName}/${parseInt(chapter)}`)
-                            callback(true); 
-                        }
-                        else {
-                            // last check : does the manga chapter folder exists?
-                            FileSystem.getInfoAsync(FileSystem.documentDirectory + `Hinode/downloads/${mangaName}/${parseInt(chapter)}`).then((result)=>{
-                                if(result.exists){
-                                    callback(true);
-                                }else{
-                                    FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + `Hinode/downloads/${mangaName}/${parseInt(chapter)}`).then((result)=>{
-                                        callback(true);
-                                    }).catch((err)=>{
-                                        callback(true)
-                                    });
-                                }
-                            }).catch((err)=>{
-                                callback(true);
-                            });
-                        } 
-                    });
-                }
-                else {
-                    FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + `Hinode/downloads/${mangaName}`).then((result)=>{
-                        callback(true);
-                    }).catch((err)=> {
-                        callback(true)
-                    });
-                    
-                    //return exists.exists ? true : false;
-                }
-            })*/
         }
 
         let name = nameParser(manga);
@@ -139,16 +102,14 @@ export class MangaTube extends Manga{
                              //useDispatch(updateDownloadCount({
                              //    index : index
                              //}));
-                            console.log("Baixou finalmente, movendo para pasta publica agora...");
                             MediaLibrary.createAssetAsync(FileSystem.documentDirectory + `Hinode/downloads/${name}/${parseInt(chapter)}/${page}.jpg`).then((asset)=>{
                             MediaLibrary.getAlbumAsync("Hinode").then((album)=>{
                                 if(album ===  null){
-                                    console.log("Hinode folder exists");
                                     MediaLibrary.createAlbumAsync(`Hinode/downloads/${name}/${parseInt(chapter)}`,asset,false).then((created)=>{
                                         if(created){
                                             console.log("Album created");
                                         }else{
-                                            console.log("Error creating folder");
+                                            console.log("Erro ao criar album");
                                         }
                                     }).catch((err)=> console.log)
                                 }
