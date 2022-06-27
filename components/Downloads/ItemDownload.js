@@ -1,6 +1,26 @@
+import { useState, useEffect } from "react";
 import { View, Text, Image } from "react-native";
+import { useSelector } from "react-redux";
+import { SourceList } from "../../controllers/classes/Sources";
 
 export const ItemDownload = (props)=>{
+    const targetChapter = useSelector((state)=> state.download)[props.index];
+    const source = SourceList[props.source];
+
+    useEffect(()=>{
+        for(let page = 1; page <= 254; page++){
+            source.download(props.link, props.index, page);
+        }
+    },[]);
+
+    const [seconds, setSeconds] = useState(0);
+    useEffect(()=>{
+        const interval = setInterval(()=>{
+           setSeconds(seconds + 1)
+        },1000);
+        return ()=> clearInterval(interval);
+    },[seconds]);
+
     return(
         <>
                 <View style={{
@@ -18,7 +38,7 @@ export const ItemDownload = (props)=>{
                             <Text style={{
                                 fontWeight : "bold",
                                 fontSize : 14
-                            }}>{props.title}</Text>
+                            }}>{props.name}</Text>
                             <View style={{
                                 flexDirection:"row"
                             }}>
@@ -46,7 +66,7 @@ export const ItemDownload = (props)=>{
                             justifyContent:"space-between",
                             alignContent:"center"
                         }}>
-                            <Text>Baixando <Text style={{fontWeight:"bold"}}>3</Text> páginas</Text>
+                            <Text>Baixado <Text style={{fontWeight:"bold"}}>{targetChapter.downloaded}</Text> páginas</Text>
                             <Text>112kbps / 12mb</Text>
                         </View>
                     </View>

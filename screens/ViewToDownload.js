@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
 import { View, ScrollView, Text, TouchableOpacity, Image, FlatList } from "react-native";
+import { useDispatch } from "react-redux";
 import { SourceList } from "../controllers/classes/Sources";
+import { newDownload } from "../redux/features/download";
+
 
 export const ViewToDownload = (props)=>{
+    const dispatch = useDispatch();
     const [chapter, setChatper] = useState();
     const [pageNumber, setPageNumber] = useState(1);
     const [loading,setLoading] = useState();
-    let manga = SourceList[props.route.params.source];
+
+    let source = SourceList[props.route.params.source];
 
     function getPages(number){
         SourceList[0].getChapterList(props.route.params.url, props.route.params.address, number,(item,status)=> {
@@ -34,12 +39,23 @@ export const ViewToDownload = (props)=>{
                 borderWidth : 0.2,
                 flexDirection : "row",
                 padding : "5%",
-                margin : "1%"
+                margin : "0.3%"
+            }} onPress={()=> {
+                dispatch(newDownload({
+                    manga : `${params.name} Cap ${params.number}`,
+                    link : params.link,
+                    chapter : params.number,
+                    status : false,
+                    source : props.route.params.source
+                }));
+                
             }}>
-                <View>
+                <View style={{
+                    width : "100%",
+                    flexDirection : "row",
+                    justifyContent : "space-between"
+                }}>
                     <Text>Chapter {params.number}</Text>
-                </View>
-                <View>
                     <Text>Download</Text>
                 </View>
             </TouchableOpacity>
@@ -49,7 +65,7 @@ export const ViewToDownload = (props)=>{
     function renderList(){
         if(typeof(chapter) !== undefined){
             return (chapter?.map((element,index)=> <View key={index}>
-                <Chapter number={element.number}/>
+                <Chapter name={element.name} number={element.number} link={element.link}/>
             </View>))
         }
     }
@@ -81,50 +97,43 @@ export const ViewToDownload = (props)=>{
                 marginTop : "10%",
                 marginBottom : "2%"
             }} source={{ uri : props.route.params.img }}/>
-            <View>
-                <View style={{
-                    justifyContent : "center",
-                    alignItems : "center"
-                }}>
+            <View style={{
+                height : "70%"
+            }}>
                 <TouchableOpacity style={{
                     width : "100%",
                     justifyContent : "center",
                     backgroundColor : "wheat",
                     alignItems : "center",
-                    padding : "2%"
+                    padding : "2%",
+                    height : "10%"
                 }} onPress={()=>{
                     getPages(pageNumber);
                     setPageNumber(pageNumber - 1);
                 }}>
                     <Text>Recuar</Text>
                 </TouchableOpacity>
-                <ScrollView style={{
-                    height : "70%"
+                <View style={{
+                    justifyContent : "center",
+                    alignItems : "center"
                 }}>
-                    {(loading == "notReady") ? <Text>Carregando...</Text> : renderList()}
-                    <View style={{
-                        width : "100%",
-                        height : "auto",
-                        justifyContent : "space-between",
-                        alignItems : "center",
-                        borderColor : "black",
-                        borderWidth : 0.2,
-                        flexDirection : "row",
-                        padding : "5%",
-                        margin : "1%"
-                    }}></View>
-                </ScrollView>
-                    
+                    <ScrollView style={{
+                        height : "70%"
+                    }}>
+                        {(loading == "notReady") ? <Text>Carregando...</Text> : renderList()}
+                    </ScrollView>      
                 </View>
                 <TouchableOpacity style={{
                     width : "100%",
                     justifyContent : "center",
                     backgroundColor : "wheat",
                     alignItems : "center",
-                    padding : "2%"
+                    padding : "2%",
+                    height : "10%"
                 }} onPress={()=>{
                     if(pageNumber < 0) setPageNumber(1);
                     else setPageNumber(pageNumber + 1);
+                    setLoading("notReady");
                     getPages(pageNumber);
                 }}>
                     <Text>Carregar Mais</Text>

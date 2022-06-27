@@ -5,6 +5,15 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
+    ],
+    "plugins": [
+      [
+        "expo-media-library",{
+          "photosPermission" : "Permissões para fotos",
+          "savePhotosPermission" : "Permissões para salvar as fotos",
+          "isAccessMediaLocationEnabled": true
+        }
+      ]
     ]
   }
 }
