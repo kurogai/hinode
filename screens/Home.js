@@ -4,6 +4,8 @@ import MangaSearchResult from "../components/MangaSearchResult";
 import ModalDropdown from 'react-native-modal-dropdown';
 
 import { SourceList } from "../controllers/classes/Sources";
+import { mangaList } from "../redux/features/mangaList";
+import { useDispatch } from "react-redux";
 
 export const Home = (props)=>{
     const [online, setOnline] = useState(false);

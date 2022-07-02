@@ -6,7 +6,8 @@ import { Definitions } from './Definitions';
 import Swiper from 'react-native-swiper';
 import BottonNav from '../components/BottonNav';
 import { useRef, useState } from 'react';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
+import { mangaList } from '../redux/features/mangaList';
 
 export const _Index = (props)=>{
     const swiper = useRef(null);

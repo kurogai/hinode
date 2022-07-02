@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "SosuMangaReader",
-    "slug": "SosuMangaReader",
+    "name": "Hinode",
+    "slug": "Hinode",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
@@ -15,6 +15,17 @@
           "isAccessMediaLocationEnabled": true
         }
       ]
-    ]
+    ],
+    "android": {
+			"package": "ao.hinode.kurogai",
+			"permissions": [
+				"android.permission.CAMERA",
+				"android.permission.INTERNET",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+			]
+		}
   }
 }

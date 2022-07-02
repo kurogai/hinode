@@ -1,28 +1,67 @@
 import { useState, useEffect } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ToastAndroid, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { SourceList } from "../../controllers/classes/Sources";
 import { updateDownloadCount } from "../../redux/features/download";
 
+import * as MediaLibrary from "expo-media-library";
+
 export const ItemDownload = (props)=>{
-    const [pageSize, setSize] = useState(0);
+    //const [pageSize, setSize] = useState(0);
     const [downloaded, setDownloaded] = useState(false);
     const targetChapter = useSelector((state)=> state.download)[props.index];
     const source = SourceList[props.source];
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        for(let page = 1; page <= 254; page++){
-            source.download(props.link, props.index, page, status =>{
-                if(status == true){
-                    dispatch(updateDownloadCount({
-                        manga : targetChapter.manga
-                    }));
+        // check first about gallery modify option
+        const start = ()=>{
+            MediaLibrary.getPermissionsAsync().then((status)=>{
+                if(status.granted){
+                    ToastAndroid.show("Baixando...",3);
+                    
+                    for(let page = 1; page <= 254; page++){
+                        source.download(props.link, props.index, page, status =>{
+                            if(status == true){
+                                dispatch(updateDownloadCount({
+                                    manga : targetChapter.manga
+                                }));
+                            }else{
+                                setDownloaded(true);
+                            }
+                        });
+                    }
                 }else{
-                    setDownloaded(true);
+                    Alert.alert(
+                        "Sem permissões montar as pastas",
+                        "O Hinode precisa de permissões para poder criar, alterar e excluir imagens "+
+                        ", alem de montar seu próprio diretório no seu celular, porfavor aceite a permissão"+
+                        "pra autorizar e prosseguir com o download.",
+                        [
+                            {
+                                "text" : "Permitir",
+                                "onPress" : async ()=>{
+                                    const givePermissions = await MediaLibrary.requestPermissionsAsync();
+                                    if(givePermissions.granted){
+                                        ToastAndroid.show("Permissões dadas",4);
+                                        start();
+                                    }
+                                }
+                            },
+                            {
+                                "text" : "Não Permitir",
+                                "onPress" : async ()=>{
+                                    Alert.alert("Erro","Não vai ser possível iniciar este download por falta de permissões");
+                                }
+                            }
+                        ]
+                        )
                 }
-            });
+            })
         }
+        
+        start();
+
     },[]);
 
     const [seconds, setSeconds] = useState(0);

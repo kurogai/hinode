@@ -1,25 +1,20 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { View, ScrollView, Text, TouchableOpacity } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import BottonNav from "../components/BottonNav";
 import { GalleryMangaItem } from "../components/Gallery/GalleryMangaItem";
+import { mangaList } from "../redux/features/mangaList";
+import * as MediaLibrary from "expo-media-library";
 
 const alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-const mangaName = [
-    "Naruto Shippuden", 
-    "Jujutsu Kaizen",
-    "Dragon Ball", 
-    "American Ninja",
-    "Fairy Tail",
-    "Re-Zero",
-    "Fate-Two",
-    "One Punch Man",
-    "Hunter X Hunter",
-    "Mermaid Dragon Konbayashi",
-    "Nanatsu no Taizai"
-];
 
 export const Gallery = (props)=>{
     const [orderBy, setOrderBy] = useState(null);
+    const [mangaName, setMangaName] = useState([]);
+
+    const [folder, setFolder] = useState([]);
+
     let newList;
     newList = mangaName.filter((item)=> item[0] === orderBy || orderBy === null).sort((a,b)=>{
         if(a < b) return -1;
@@ -27,6 +22,22 @@ export const Gallery = (props)=>{
         return 0;
     });
 
+    function load(){
+        MediaLibrary.getAssetsAsync("Hinode/downloads",).then((result)=>{
+            let state = result.assets
+            state.map((item)=>{
+                let name = item.uri.split("/")[9];
+                name[0] = name[0].toUpperCase();
+                //state.push("a");
+                
+                //console.log(name)
+            });
+        });
+    }
+    // resumir daqui, montar os componentes e os seus nomes manualmente
+    //load();
+    //console.log(folder);
+    
     return (
         <View style={{height:"100%", backgroundColor : "#F8EDEB"}}>
             <View>
