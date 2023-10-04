@@ -3,29 +3,49 @@
     "name": "Hinode",
     "slug": "Hinode",
     "version": "1.0.0",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "androidStatusBar": {
+      "backgroundColor": "#ffffff",
+      "translucent": false
+    },
+    "splash": {
+      "backgroundColor": "#070707"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
-    "orientation" : "portrait",
+    "orientation": "portrait",
     "plugins": [
       [
-        "expo-media-library",{
-          "photosPermission" : "Permissões para fotos",
-          "savePhotosPermission" : "Permissões para salvar as fotos",
+        "expo-media-library",
+        {
+          "photosPermission": "Permissões para fotos",
+          "savePhotosPermission": "Permissões para salvar as fotos",
           "isAccessMediaLocationEnabled": true
         }
       ]
     ],
     "android": {
-			"package": "ao.hinode.kurogai",
-			"permissions": [
-				"android.permission.CAMERA",
-				"android.permission.INTERNET",
+      "package": "ao.hinode.kurogai",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.INTERNET",
         "android.permission.WRITE_EXTERNAL_STORAGE",
         "CAMERA",
         "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
-			]
-		}
+        "WRITE_EXTERNAL_STORAGE",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_MEDIA_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ce882613-b3ca-48ed-a081-768b26c34878"
+      }
+    }
   }
 }
